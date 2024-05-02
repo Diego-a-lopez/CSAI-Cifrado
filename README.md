@@ -4,20 +4,30 @@
 # Comandos de interes
 
 ## Crear virtual enviroment
-'virtualenv cifrado'
+```
+virtualenv cifrado
+```
 
-##Activar virtual enviroment
+## Activar virtual enviroment
 
-'cifrado\Scripts\activate'
+```
+cifrado\Scripts\activate
+```
 
 ## Guardar requerimientos de paquetes
 
-'pip freeze > requirements.txt'
+```
+pip freeze > requirements.txt
+```
 
 ## Desactivar virtual enviroment
 
-'deactivate'
+```
+deactivate
+```
 
 ## Correr el programa
 
-'docker run -it --rm --name DiegoAleja-running DiegoAleja DiegoAleja.py JdP_00'
+```
+docker run -it --rm --name DiegoAleja-running DiegoAleja DiegoAleja.py JdP_00
+```
