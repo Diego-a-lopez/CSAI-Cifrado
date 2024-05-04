@@ -1,0 +1,60 @@
+#!/usr/bin/python
+# -*- coding: utf8 -*-
+import os, sys
+
+def ayudaPrincipal():
+	print (" --------------------------------------------------------------------------------------")
+	print ("|                                                                                     |")
+	print ("| \tALGORITMOS CRIPTOGRAFICOS                                                     |")
+	print ("|										      |")
+	print ("| sintaxis: python3 principal.py <algoritmo>					      |")
+	print ("|										      |")
+	print ("| <algoritmo>:									      |")
+	print ("|\t-sc    Algoritmo de sustitución monoalfabética Julio Cesar		      |")
+	print (
+	print ("|\t-k    Algoritmo de Kasiski                                       ")
+        print ("|_____________________________________________________________________________________|")
+	print ("| Elaborado por: Angela Maria Munoz (angela_maria.munoz@uao.edu.co)                                                      ")
+	print ("| 		 Pedro Alejandro Bonilla (pedro_alejandro.bonillap@uao.edu.co)                                                ")
+	print ("| Esp:           Seguridad Informatica                         	     ")
+	print ("| Docente:       Siler Amador Donado (samador@unicauca.edu.co)                                                            ")
+	print ("|         									                     ")
+	print ("|                             UNIVERSIDAD AUTONOMA DE OCCIDENTE                                                                            ")
+	print ("|                   		  Mayo 2019                                                                                 ")
+	print (" --------------------------------------------------------------------------------------")
+
+	print (" --------------------------------------------------------------------------------------------")
+def ayudaCesar():
+	print (" -------------------------------------------------------------------------------------")
+	print ("|                                                                                     |")
+	print ("| \tALGORITMO JULIO CÉSAR		                                              |")
+	print ("|										      |")
+	print ("| sintaxis: python3 principal.py -sc <modo> <archivoEntrada> <clave>                  |")
+	print ("|										      |")
+	print ("| <modo>:									      |")
+	print ("|\t-c    para cifrar el archivo			             		      |")
+	print ("|\t-d    para decifrar el archivo                  			      |")
+	print ("| 										      |")
+	print ("| <archivoEntrada>: Nombre del archivo de entrada a cifrar o descifrar ej: quijote.txt|")
+	print ("|										      |")
+	print ("| <clave>: es un número que corresponde al desplazamiento del alfabeto                |")
+	print ("|										      |")
+	print ("| Codificación y decodificación (opcional): 	 	                              |")
+	print ("|\tsintaxis: python3 principal.py -sc <modo> <archivoEntrada> <clave> -c64       |")
+	print ("|										      |")
+	print ("| Ejemplos:    					 				      |")
+	print ("|										      |")
+	print ("| Los archivos de prueba los puedes encontrar en:            		              |")
+	print ("| http://seguridad.unicauca.edu.co/criptografia/MobyDick.txt           		      |")
+	print ("| http://seguridad.unicauca.edu.co/criptografia/quijote.txt            	              |")
+	print ("|										      |")
+	print ("|\tcifrar: python3 principal.py -sc -c quijote.txt 4                             |")
+	print ("|\tdescifrar: python3 principal.py -sc -d quijote.txt.cif 4                      |")
+	print ("|\tcifrar codificando: python3 principal.py -sc -c quijote.txt 4 -c64            |")
+	print ("|\tdescifrar decodificando: python3 principal.py -sc -d quijote.txt.cif 4 -c64   |")
+	print ("|         									      |")
+	print (" -------------------------------------------------------------------------------------")
+
+
+
+
