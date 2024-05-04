@@ -27,35 +27,7 @@ def ayudaPrincipal():
 
 
 
-def ayudaCesar():
-	print (" -------------------------------------------------------------------------------------")
-	print ("|                                                                                     |")
-	print ("| \tALGORITMO JULIO CÉSAR		                                              |")
-	print ("|										      |")
-	print ("| sintaxis: python3 principal.py -sc <modo> <archivoEntrada> <clave>                  |")
-	print ("|										      |")
-	print ("| <modo>:									      |")
-	print ("|\t-c    para cifrar el archivo			             		      |")
-	print ("|\t-d    para decifrar el archivo                  			      |")
-	print ("| 										      |")
-	print ("| <archivoEntrada>: Nombre del archivo de entrada a cifrar o descifrar ej: quijote.txt|")
-	print ("|										      |")
-	print ("| <clave>: es un número que corresponde al desplazamiento del alfabeto                |")
-	print ("|										      |")
-	print ("|                                        	 	                              |")
-	print ("|\tsintaxis: python3 principal.py -sc <modo> <archivoEntrada> <clave>        |")
-	print ("|										      |")
-	print ("| Ejemplos:    					 				      |")
-	print ("|										      |")
-	print ("| Los archivos de prueba los puedes encontrar en:            		              |")
-	print ("| http://seguridad.unicauca.edu.co/criptografia/MobyDick.txt           		      |")
-	print ("| http://seguridad.unicauca.edu.co/criptografia/quijote.txt            	              |")
-	print ("|										      |")
-	print ("|\tcifrar:    python3 principal.py -sc -c textos_prueba/quijote.txt 4                             |")
-	print ("|\tdescifrar: python3 principal.py -sc -d textos_prueba/quijote.txt.cif 4                      |")
-	print ("|\                                                                               |")
-	print ("|\                                                                               |")
-	print (" -------------------------------------------------------------------------------------")
+
 
 def ayudaKasiski():
 	print (" -------------------------------------------------------------------------------------")
