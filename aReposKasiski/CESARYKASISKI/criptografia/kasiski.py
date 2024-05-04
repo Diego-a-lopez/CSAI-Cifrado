@@ -3,7 +3,7 @@ from archivo import escribirArchivo
 from archivo import leer_archivo
 from functools import reduce
 from math import gcd
-import re
+import re 
 
 
 def frecuencia(texto, long_palabra):
