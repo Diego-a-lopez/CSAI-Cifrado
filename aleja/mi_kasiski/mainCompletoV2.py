@@ -53,10 +53,35 @@ def filtrar_subcadenas(subcadenas):
                 es_subcadena = True
                 break
         if not es_subcadena:
+            
+            # Obtenemos el valor de longitud más larga
             if (len(subcadena) > max_length):
                 max_length = len(subcadena)
+            
+
             subcadenas_filtradas.append(subcadena)
     return subcadenas_filtradas, max_length
+
+
+
+def obtener_subcadenas_mayor_longitud(subcadenas, max_longitud):
+    subcadenas_mayor_longitud = [subcadena for subcadena in subcadenas if len(subcadena) == max_longitud]
+    
+    # Si solo existe una cadena de maxima longitud, se buscan más cadenas
+    # de tamaño max_longitud - 1
+    if len(subcadenas_mayor_longitud) == 1:
+        subcadenas_salida = subcadenas_mayor_longitud[:]
+        longitud_anterior = max_longitud - 1
+        while longitud_anterior >= 1:
+            subcadenas_anteriores = [subcadena for subcadena in subcadenas if len(subcadena) == longitud_anterior]
+            if subcadenas_anteriores:
+                subcadenas_salida.extend(subcadenas_anteriores)
+                break
+            longitud_anterior -= 1
+    else:
+        subcadenas_salida = subcadenas_mayor_longitud
+    return subcadenas_salida
+
 
 
 # FASE 2
@@ -141,73 +166,6 @@ def create_substrings(text, key_length):
 
 
 
-######## DEL REPO 4
-
-def get_index_c(ciphertext):
-	
-	N = float(len(ciphertext))
-	frequency_sum = 0.0
-
-	# Using Index of Coincidence formula
-	for letter in alphabet:
-		frequency_sum+= ciphertext.count(letter) * (ciphertext.count(letter)-1)
-
-	# Using Index of Coincidence formula
-	ic = frequency_sum/(N*(N-1))
-	return ic
-
-# Returns the key length with the highest average Index of Coincidence
-def get_key_length(ciphertext):
-	ic_table=[]
-
-	# Splits the ciphertext into sequences based on the guessed key length from 0 until the max key length guess (20)
-	# Ex. guessing a key length of 2 splits the "12345678" into "1357" and "2468"
-	# This procedure of breaking ciphertext into sequences and sorting it by the Index of Coincidence
-	# The guessed key length with the highest IC is the most porbable key length
-	for guess_len in range(MAX_KEY_LENGTH_GUESS):
-		ic_sum=0.0
-		avg_ic=0.0
-		for i in range(guess_len):
-			sequence=""
-			# breaks the ciphertext into sequences
-			for j in range(0, len(ciphertext[i:]), guess_len):
-				sequence += ciphertext[i+j]
-			ic_sum+=get_index_c(sequence)
-		# obviously don't want to divide by zero
-		if not guess_len==0:
-			avg_ic=ic_sum/guess_len
-		ic_table.append(avg_ic)
-
-	# returns the index of the highest Index of Coincidence (most probable key length)
-	best_guess = ic_table.index(sorted(ic_table, reverse = True)[0])
-	second_best_guess = ic_table.index(sorted(ic_table, reverse = True)[1])
-
-	# Since this program can sometimes think that a key is literally twice itself, or three times itself, 
-	# it's best to return the smaller amount.
-	# Ex. the actual key is "dog", but the program thinks the key is "dogdog" or "dogdogdog"
-	# (The reason for this error is that the frequency distribution for the key "dog" vs "dogdog" would be nearly identical)
-	if best_guess % second_best_guess == 0:
-		return second_best_guess
-	else:
-		return best_guess
-
-
-
-
-
-
-
-
-
-
-###############
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -222,28 +180,25 @@ if __name__ == "__main__":
     print("Longitud: "+str(len(texto_sin_espacios)))
     print("TIENE QUE DAR 404")
 
-
-    # Intento repo 4
-
-    key_length=get_key_length(texto_sin_espacios)
-    print("Key length is most likely {}".format(key_length))
-    
-
-
     
     subcadenas_repetidas = encontrar_subcadenas_repetidas(texto_sin_espacios)
     subcadenas_filtradas, max_length = filtrar_subcadenas(subcadenas_repetidas)
 
-    # ALOMEJOR IMPLEMENTO EL METODO DE SELECCION DE PREFERENCIA PARA MCD
-    # Es decir, o que tenia pensado en un principio me lo replantearé
+    print(subcadenas_filtradas)
 
+    subcadenas_mayor_longitud = obtener_subcadenas_mayor_longitud(subcadenas_filtradas, max_length)
+
+
+    print(subcadenas_mayor_longitud)
+
+    
 
 
     # Condicion para MCD
     todasdiferencias = []
-    if subcadenas_filtradas:
+    if subcadenas_mayor_longitud:
         print("Subcadenas repetidas encontradas:")
-        for subcadena in subcadenas_filtradas:
+        for subcadena in subcadenas_mayor_longitud:
             print(subcadena)
 
             posiciones = encontrar_posiciones(texto_sin_espacios, subcadena)
@@ -260,17 +215,24 @@ if __name__ == "__main__":
         print("No se encontraron subcadenas repetidas.")
         
     print("Diferencias de las cadenas:", todasdiferencias)
+
+    
         
     gcd_distances = gcd_of_list(todasdiferencias)
     print("Posible longitud de clave:", gcd_distances)
 
-    quit()
+   
+    
     
     substrings = create_substrings(texto_sin_espacios, gcd_distances)
     print("Subcadenas creadas:")
     for i, substring in enumerate(substrings):
         print(f"Subcadena {i+1}: {substring}")
-            
+
+
+    # Esta bien a partir de aqui
+    quit()
+
     lang = 'sp'  # or 'fr', or 'sp'
     key = generate_key(substrings, lang)
     print("Posible clave encontrada:", key)

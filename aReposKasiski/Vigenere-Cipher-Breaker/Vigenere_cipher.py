@@ -1,7 +1,7 @@
 MAX_KEY_LENGTH_GUESS = 20
-#alphabet = 'abcdefghijklmnopqrstuvwxyz'
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
 #alphabet = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'
-alphabet = 'abcdefghijklmnñopqrstuvwxyz'
+#alphabet = 'abcdefghijklmnñopqrstuvwxyz'
 
 # Array containing the relative frequency of each letter in the English language
 english_frequences = [0.08167, 0.01492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015,
