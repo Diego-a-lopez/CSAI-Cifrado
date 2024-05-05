@@ -4,7 +4,7 @@ from math import gcd
 
 def leer_archivo(nombre_archivo):
     try:
-        with open(nombre_archivo, 'r') as archivo:
+        with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
             texto = archivo.read()
             texto_sin_espacios_ni_saltos = texto.replace(" ", "").replace("\n", "")
             return texto_sin_espacios_ni_saltos
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     for cadena, lista_distancias in distancias.items():
         print(f"'{cadena}': {lista_distancias}")
 
-    print(distancias)
+    #print(distancias)
     
     mcd_encontrado = encontrar_maximo_comun_divisor(distancias)
     print("\nFactores comunes de las distancias:")

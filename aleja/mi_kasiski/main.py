@@ -4,7 +4,7 @@ from math import gcd
 
 def leer_archivo(nombre_archivo):
     try:
-        with open(nombre_archivo, 'r') as archivo:
+        with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
             texto = archivo.read()
             return texto
     except FileNotFoundError:
@@ -14,6 +14,7 @@ def leer_archivo(nombre_archivo):
 
 # FASE 1
 
+# Encuentra las cadenas repetidas
 def encontrar_subcadenas_repetidas(texto):
     subcadenas_repetidas = []
     n = len(texto)
@@ -23,9 +24,26 @@ def encontrar_subcadenas_repetidas(texto):
             veces_repetida = texto.count(subcadena)
             if veces_repetida > 1 and subcadena not in subcadenas_repetidas:
                 subcadenas_repetidas.append(subcadena.replace(" ", ""))
+    return subcadenas_repetidas
+    
+    # Esto era si nos quisiesemos quedar con el más larg
+    #subcadenas_filtradas = []
+    #for subcadena in subcadenas_repetidas:
+    #    if all(len(subcadena) >= len(otra_subcadena) for otra_subcadena in subcadenas_repetidas if subcadena != otra_subcadena):
+    #        subcadenas_filtradas.append(subcadena)
+    #return subcadenas_filtradas
+
+
+# De las cadenas repetidas, si uno es subcadena de otro, se elimina de la lista
+def filtrar_subcadenas(subcadenas):
     subcadenas_filtradas = []
-    for subcadena in subcadenas_repetidas:
-        if all(len(subcadena) >= len(otra_subcadena) for otra_subcadena in subcadenas_repetidas if subcadena != otra_subcadena):
+    for subcadena in subcadenas:
+        es_subcadena = False
+        for otra_subcadena in subcadenas:
+            if subcadena != otra_subcadena and subcadena in otra_subcadena:
+                es_subcadena = True
+                break
+        if not es_subcadena:
             subcadenas_filtradas.append(subcadena)
     return subcadenas_filtradas
 
@@ -57,17 +75,7 @@ def calcular_diferencias(posiciones):
 
 
 
-def filtrar_subcadenas(subcadenas):
-    subcadenas_filtradas = []
-    for subcadena in subcadenas:
-        es_subcadena = False
-        for otra_subcadena in subcadenas:
-            if subcadena != otra_subcadena and subcadena in otra_subcadena:
-                es_subcadena = True
-                break
-        if not es_subcadena:
-            subcadenas_filtradas.append(subcadena)
-    return subcadenas_filtradas
+
 
 
 
@@ -111,7 +119,9 @@ if __name__ == "__main__":
             print("Posiciones:", posiciones)
             diferencias = calcular_diferencias(posiciones)
             print("Diferencias entre posiciones:", diferencias)
-    
+
+
+            
     
     
     
