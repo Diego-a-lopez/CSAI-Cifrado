@@ -2,7 +2,7 @@
 import sys
 import os
 
-MAX_KEY_LENGTH_GUESS = 20'
+MAX_KEY_LENGTH_GUESS = 20
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 # Array containing the relative frequency of each letter in the spanish language
