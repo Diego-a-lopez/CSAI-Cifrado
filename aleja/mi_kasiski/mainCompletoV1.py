@@ -88,13 +88,25 @@ def gcd_of_list(numbers):
 
 # FASE 5
 
-def find_caesar_shift(substring):
+def find_caesar_shift(substring, lang):
     max_count = 0
     best_shift = 0
     
-    for shift in range(26):
-        shifted_text = ''.join(chr((ord(char) - 97 - shift) % 26 + 97) for char in substring.lower())
-        count = sum(shifted_text.count(letter) for letter in 'etaoinshrdlu')
+    if lang == 'en':
+        alphabet_length = 26
+        common_letters = 'etaoinshrdlu'
+    elif lang == 'fr':
+        alphabet_length = 27
+        common_letters = 'eariotnsludcmpé'
+    elif lang == 'sp':
+        alphabet_length = 27
+        common_letters = 'eaosrnidltcmupbgé'
+    else:
+        raise ValueError("Unsupported language. Please choose 'en', 'fr', or 'sp'.")
+    
+    for shift in range(alphabet_length):
+        shifted_text = ''.join(chr((ord(char) - ord('a') - shift) % alphabet_length + ord('a')) for char in substring.lower())
+        count = sum(shifted_text.count(letter) for letter in common_letters)
         
         if count > max_count:
             max_count = count
@@ -102,10 +114,10 @@ def find_caesar_shift(substring):
     
     return best_shift
 
-def generate_key(substrings):
+def generate_key(substrings, lang):
     key = ''
     for substring in substrings:
-        shift = find_caesar_shift(substring)
+        shift = find_caesar_shift(substring, lang)
         key += chr((26 - shift) % 26 + 97)
     return key
    
@@ -162,5 +174,6 @@ if __name__ == "__main__":
     for i, substring in enumerate(substrings):
         print(f"Subcadena {i+1}: {substring}")
             
-    key = generate_key(substrings)
+    lang = 'sp'  # or 'fr', or 'sp'
+    key = generate_key(substrings, lang)
     print("Posible clave encontrada:", key)
