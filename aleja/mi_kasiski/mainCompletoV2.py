@@ -162,6 +162,38 @@ def create_substrings(text, key_length):
     return substrings
 
 
+### Probando
+
+def letras_mas_repetidas(array_strings, orden_empate):
+    letras_concatenadas = ""
+    for elemento in array_strings:
+        # Creamos un diccionario para contar las ocurrencias de cada letra en el elemento
+        conteo_letras = {}
+        for letra in elemento:
+            if letra in conteo_letras:
+                conteo_letras[letra] += 1
+            else:
+                conteo_letras[letra] = 1
+        # Encontramos la máxima cantidad de ocurrencias en el elemento
+        max_ocurrencias = max(conteo_letras.values())
+        # Recorremos el diccionario para encontrar todas las letras que tienen la máxima cantidad de ocurrencias
+        letras_mas_repetidas = [letra for letra, ocurrencias in conteo_letras.items() if ocurrencias == max_ocurrencias]
+        # Imprimimos las letras que tienen la máxima cantidad de ocurrencias
+        print(f"En el elemento '{elemento}' las letras más repetidas son:")
+        for letra in letras_mas_repetidas:
+            print(f"- '{letra}' aparece {max_ocurrencias} veces")
+        # En caso de empate, seleccionamos la letra que aparece primero en orden_empate
+        letra_seleccionada = None
+        for letra in orden_empate:
+            if letra in letras_mas_repetidas:
+                letra_seleccionada = letra
+                break
+        if letra_seleccionada is None:
+            # Si ninguna de las letras candidatas está en orden_empate, seleccionamos la primera letra candidata
+            letra_seleccionada = letras_mas_repetidas[0]
+        # Concatenamos la letra seleccionada en el string resultante
+        letras_concatenadas += letra_seleccionada
+    return letras_concatenadas
 
 
 
@@ -226,13 +258,20 @@ if __name__ == "__main__":
     
     substrings = create_substrings(texto_sin_espacios, gcd_distances)
     print("Subcadenas creadas:")
-    for i, substring in enumerate(substrings):
-        print(f"Subcadena {i+1}: {substring}")
+    #for i, substring in enumerate(substrings):
+        #print(f"Subcadena {i+1}: {substring}")
+
+    #print(substrings)
 
 
-    # Esta bien a partir de aqui
-    quit()
+    # NOTA: EL PROBLEMA DEL DESEMPATE ESTABA EN LAS MAYUSCULAS
 
-    lang = 'sp'  # or 'fr', or 'sp'
-    key = generate_key(substrings, lang)
-    print("Posible clave encontrada:", key)
+    alphabet_en = 'etaoinshrdlu'
+    alphabet_fr ='eariotnsludcmpé'
+    alphabet_sp = 'eaOSrnidltcmupbgé'
+
+    resultado = letras_mas_repetidas(substrings, alphabet_sp)
+    print("Letras más repetidas:", resultado)
+
+    
+    
