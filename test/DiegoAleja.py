@@ -1,13 +1,25 @@
-MAX_KEY_LENGTH_GUESS = 20
-#alphabet = 'abcdefghijklmnopqrstuvwxyz'
-#alphabet = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'
-alphabet = 'abcdefghijklmnñopqrstuvwxyz'
 
-# Array containing the relative frequency of each letter in the English language
+import sys
+import os
+
+MAX_KEY_LENGTH_GUESS = 20'
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+
+# Array containing the relative frequency of each letter in the spanish language
 spanish_frequences = [0.08167, 0.01492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015,
 					  0.06094, 0.06966, 0.00153, 0.00772, 0.04025, 0.02406, 0.06749,
 					  0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758,
 					  0.00978, 0.02360, 0.00150, 0.01974, 0.00074]
+
+
+def leer_archivo(nombre_archivo):
+    try:
+        with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
+            texto = archivo.read()
+            return texto
+    except FileNotFoundError:
+        return "El archivo no existe."
+
 
 # Returns the Index of Councidence for the "section" of ciphertext given
 def get_index_c(ciphertext):
@@ -60,7 +72,7 @@ def get_key_length(ciphertext):
 
 # Performs frequency analysis on the "sequence" of the ciphertext to return the letter for that part of the key
 # Uses the Chi-Squared Statistic to measure how similar two probability distributions are. 
-# (The two being the ciphertext and regular english distribution)
+# (The two being the ciphertext and regular spanish distribution)
 def freq_analysis(sequence):
 	all_chi_squareds = [0] * 26
 
@@ -78,16 +90,16 @@ def freq_analysis(sequence):
 		for j in range(26):
 			v[j] *= (1.0/float(len(sequence)))
 
-		# now you can compare to the english frequencies
+		# now you can compare to the spanish frequencies
 		for j in range(26):
-			chi_squared_sum+=((v[j] - float(english_frequences[j]))**2)/float(english_frequences[j])
+			chi_squared_sum+=((v[j] - float(spanish_frequences[j]))**2)/float(spanish_frequences[j])
 
 		# add it to the big table of chi squareds
 		all_chi_squareds[i] = chi_squared_sum
 
 	# return the letter of the key that it needs to be shifted by
 	# this is found by the smallest chi-squared statistic (smallest different between sequence distribution and 
-	# english distribution)
+	# spanish distribution)
 	shift = all_chi_squareds.index(min(all_chi_squareds))
 
 	# return the letter
@@ -106,6 +118,12 @@ def get_key(ciphertext, key_length):
 
 	return key
 
+def main2(ciphertext_unfiltered):
+	ciphertext = ''.join(x.lower() for x in ciphertext_unfiltered if x.isalpha())
+	key_length = get_key_length(ciphertext)
+	key = get_key(ciphertext, key_length)
+	return key
+
 # Returns the plaintext given the ciphertext and a key
 def decrypt(ciphertext, key):
 	# Creates an array of the ascii values of the ciphertext and the key
@@ -120,26 +138,6 @@ def decrypt(ciphertext, key):
 	# Turns the array of ascii values into characters
 	plaintext = ''.join(chr(i) for i in plain_ascii)
 	return plaintext
-
-def encrypt(plaintext, key):
-	# Creates an array of the ascii values of the plaintext and the key
-	plain_ascii = [ord(letter) for letter in plaintext]
-	key_ascii = [ord(letter) for letter in key]
-	cipher_ascii = []
-
-	# Turns each ascii value of the plaintext into the ascii value of the ciphertext
-	for i in range(len(plain_ascii)):
-
-		temp = plain_ascii[i]+key_ascii[i % len(key)]-97
-		if temp>122:
-			# Loop back to the beginning of the alphabet
-			cipher_ascii.append(temp-26)
-		else:
-			cipher_ascii.append(temp)
-
-	# Turns the array of ascii values into characters
-	ciphertext = ''.join(chr(i) for i in cipher_ascii)
-	return ciphertext
 
 def main():
 	ask = True
@@ -195,5 +193,12 @@ def main():
 		else:
 			print("Not a valid input")
 
-if __name__ == '__main__':
-	main()
+if __name__ == "__main__":
+	if len(sys.argv) != 2:
+		print("Uso: python script.py <nombre_del_archivo>")
+		sys.exit(1)
+	nombre_archivo = sys.argv[1]
+	texto_original = leer_archivo(nombre_archivo)
+	texto_sin_espacios = texto_original.replace(" ", "").replace("\n", "")
+	key = main2(texto_sin_espacios)
+	print(key)
