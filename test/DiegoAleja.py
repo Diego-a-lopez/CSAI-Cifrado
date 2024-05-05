@@ -118,80 +118,11 @@ def get_key(ciphertext, key_length):
 
 	return key
 
-def main2(ciphertext_unfiltered):
+def main(ciphertext_unfiltered):
 	ciphertext = ''.join(x.lower() for x in ciphertext_unfiltered if x.isalpha())
 	key_length = get_key_length(ciphertext)
 	key = get_key(ciphertext, key_length)
 	return key
-
-# Returns the plaintext given the ciphertext and a key
-def decrypt(ciphertext, key):
-	# Creates an array of the ascii values of the ciphertext and the key
-	cipher_ascii = [ord(letter) for letter in ciphertext]
-	key_ascii = [ord(letter) for letter in key]
-	plain_ascii = []
-
-	# Turns each ascii value of the ciphertext into the ascii value of the plaintext
-	for i in range(len(cipher_ascii)):
-		plain_ascii.append(((cipher_ascii[i]-key_ascii[i % len(key)]) % 26) +97)
-
-	# Turns the array of ascii values into characters
-	plaintext = ''.join(chr(i) for i in plain_ascii)
-	return plaintext
-
-def main():
-	ask = True
-	while ask:
-		text = input("Enter e to encrypt, or d to decrypt: ")
-		if text =='e':
-			plaintext_unfiltered = input("Enter plaintext to encrypt: ")
-			key_unfiltered = input("Enter key to encrypt with: ")
-			
-			# Filters the text so it is only alphanumeric characters, and lowercase
-			plaintext = ''.join(x.lower() for x in plaintext_unfiltered if x.isalpha())	
-			key = ''.join(x.lower() for x in key_unfiltered if x.isalpha())	
-			print(key)
-
-			ciphertext = encrypt(plaintext, key)	
-			print("Ciphertext: {}".format(ciphertext))
-
-			ask = False	
-		elif text == 'd':
-			ciphertext_unfiltered = input("Enter ciphertext to decrypt: ")
-
-			# Filters the text so it is only alphanumeric characters, and lowercase
-			ciphertext = ''.join(x.lower() for x in ciphertext_unfiltered if x.isalpha())	
-
-			askkey = True
-			while askkey:
-				torf = input("Do you know the key to decrypt with? Enter y or n: ")
-				if torf == 'n':
-
-					key_length=get_key_length(ciphertext)
-					print("Key length is most likely {}".format(key_length))
-
-					key = get_key(ciphertext, key_length)
-					plaintext = decrypt(ciphertext, key)
-
-					print("Key: {}".format(key))
-					print("Plaintext: {}".format(plaintext))
-
-					askkey = False
-				elif torf == 'y':
-
-					key_unfiltered = input("Enter key to decrypt with: ")
-					key = ''.join(x.lower() for x in key_unfiltered if x.isalpha())	
-					plaintext = decrypt(ciphertext, key)
-
-					print("Plaintext: {}".format(plaintext))
-
-					askkey = False
-				else:
-					print("Not a valid input")
-	
-			ask = False	
-		else:
-			print("Not a valid input")
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
@@ -200,5 +131,5 @@ if __name__ == "__main__":
 	nombre_archivo = sys.argv[1]
 	texto_original = leer_archivo(nombre_archivo)
 	texto_sin_espacios = texto_original.replace(" ", "").replace("\n", "")
-	key = main2(texto_sin_espacios)
+	key = main(texto_sin_espacios)
 	print(key)
