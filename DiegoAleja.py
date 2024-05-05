@@ -21,6 +21,25 @@ def leer_archivo(nombre_archivo):
         return "El archivo no existe."
 
 
+def adapt_to_english(text):
+    # Define the substitutions
+    substitutions = {
+        'ñ': 'n',
+        'á': 'a',
+        'é': 'e',
+        'í': 'i',
+        'ó': 'o',
+        'ú': 'u',
+        'ü': 'u',
+        'Ç': 'c',
+    }
+
+    # Apply substitutions
+    for original, replacement in substitutions.items():
+        text = text.replace(original, replacement)
+
+    return text
+
 # Returns the Index of Councidence for the "section" of ciphertext given
 def get_index_c(ciphertext):
 	
@@ -119,7 +138,7 @@ def get_key(ciphertext, key_length):
 	return key
 
 def main(ciphertext_unfiltered):
-	ciphertext = ''.join(x.lower() for x in ciphertext_unfiltered if x.isalpha())
+	ciphertext = adapt_to_english(''.join(x.lower() for x in ciphertext_unfiltered if x.isalpha()))
 	key_length = get_key_length(ciphertext)
 	key = get_key(ciphertext, key_length)
 	return key

@@ -6,7 +6,7 @@ import subprocess
 file_names = ["JdP_001_input", "JdP_002_input", "JdP_003_input", "videoEjemplo"]  # Update with actual file names
 
 # Path to the analysis script
-analysis_script = "./analisis.py"  # Update with the actual path
+analysis_script = "./DiegoAleja.py"  # Update with the actual path
 
 # Path to the decryption script
 decryption_script = "./descifrar.py"  # Update with the actual path
