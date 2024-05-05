@@ -48,7 +48,7 @@ def quedarse_con_mas_largas(repeticiones):
                 repeticiones_filtradas[cadena] = repeticion
     
     print(repeticiones_filtradas)
-    quit()
+    #quit()
     return repeticiones_filtradas
 
 
@@ -112,14 +112,14 @@ if __name__ == "__main__":
 
     print(repeticiones_filtradas)
 
-    quit()
+    
     repeticiones_mas_largas = quedarse_con_mas_largas(repeticiones_filtradas)
 
     print("\nCadenas de caracteres que se repiten:")
     for repeticion in repeticiones_mas_largas.values():
         print(f"'{repeticion}' se repite")
 
-    quit()
+    
     distancias = calcular_distancias(repeticiones_mas_largas)
     print("\nDistancias entre repeticiones:")
     for cadena, lista_distancias in distancias.items():

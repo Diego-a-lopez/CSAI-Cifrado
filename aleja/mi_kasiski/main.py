@@ -6,14 +6,13 @@ def leer_archivo(nombre_archivo):
     try:
         with open(nombre_archivo, 'r') as archivo:
             texto = archivo.read()
-            texto = texto.replace(" ", "").replace("\n", "")
             return texto
     except FileNotFoundError:
         return "El archivo no existe."
 
 
 
-
+# FASE 1
 
 def encontrar_subcadenas_repetidas(texto):
     subcadenas_repetidas = []
@@ -23,7 +22,7 @@ def encontrar_subcadenas_repetidas(texto):
             subcadena = texto[i:i+longitud]
             veces_repetida = texto.count(subcadena)
             if veces_repetida > 1 and subcadena not in subcadenas_repetidas:
-                subcadenas_repetidas.append(subcadena)
+                subcadenas_repetidas.append(subcadena.replace(" ", ""))
     subcadenas_filtradas = []
     for subcadena in subcadenas_repetidas:
         if all(len(subcadena) >= len(otra_subcadena) for otra_subcadena in subcadenas_repetidas if subcadena != otra_subcadena):
@@ -31,6 +30,28 @@ def encontrar_subcadenas_repetidas(texto):
     return subcadenas_filtradas
 
 
+# FASE 2
+
+def encontrar_posiciones(texto, subcadena):
+    posiciones = []
+    longitud_subcadena = len(subcadena)
+    indice = 0
+    while indice != -1:
+        indice = texto.find(subcadena, indice)
+        if indice != -1:
+            posiciones.append(indice)
+            indice += 1  # Avanzamos al siguiente carácter para evitar encontrar la misma subcadena en la misma posición
+    return posiciones
+
+
+
+
+def calcular_diferencias(posiciones):
+    diferencias = []
+    for i in range(len(posiciones) - 1):
+        diferencia = posiciones[i + 1] - posiciones[i]
+        diferencias.append(diferencia)
+    return diferencias
 
 
 
@@ -59,19 +80,40 @@ if __name__ == "__main__":
         sys.exit(1)
     
     nombre_archivo = sys.argv[1]
-    texto_procesado = leer_archivo(nombre_archivo)
-    print("Texto sin espacios ni saltos de línea:")
-    print(texto_procesado)
+    texto_original = leer_archivo(nombre_archivo)
+    texto_sin_espacios = texto_original.replace(" ", "").replace("\n", "")
+    #print("Texto sin espacios ni saltos de línea:")
+    #print(texto_sin_espacios)
+
+
+    print("Longitud: "+str(len(texto_sin_espacios)))
+    print("TIENE QUE DAR 404")
     
-    subcadenas_repetidas = encontrar_subcadenas_repetidas(texto_procesado)
+    subcadenas_repetidas = encontrar_subcadenas_repetidas(texto_sin_espacios)
     subcadenas_filtradas = filtrar_subcadenas(subcadenas_repetidas)
-    print(len("UÑE "))
+    
 
     if subcadenas_filtradas:
         print("Subcadenas repetidas encontradas:")
         for subcadena in subcadenas_filtradas:
             print(subcadena)
-            print("longitud: "+str(len(subcadena)))
-            print()
+
+            # Imprimir caracter a caracter
+            #print("Caracteres:")
+            #for caracter in subcadena:
+            #    print(caracter+",")
+            #    print("")  # Agregamos una línea en blanco después de imprimir cada subcadena
+            #print("longitud: "+str(len(subcadena)))
+            #print()
+
+            posiciones = encontrar_posiciones(texto_sin_espacios, subcadena)
+            #posiciones = encontrar_posiciones(texto_original, subcadena)
+            print("Posiciones:", posiciones)
+            diferencias = calcular_diferencias(posiciones)
+            print("Diferencias entre posiciones:", diferencias)
+    
+    
+    
+    
     else:
         print("No se encontraron subcadenas repetidas.")
